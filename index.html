@@ -711,14 +711,19 @@
                 new ISDEKWidjet({
                     defaultCity: 'Курск', 
                     cityFrom: 'Курск', 
-                    link: 'cdek-map', 
+                    link: 'cdek-map',
+                    
+                    // --- ВОТ ЭТИ ДВЕ СТРОКИ ИСПРАВЯТ ОШИБКУ НА GITHUB ---
+                    path: 'https://widget.cdek.ru/widget/scripts/',
+                    servicepath: 'https://widget.cdek.ru/widget/scripts/service.php',
+                    // ---------------------------------------------------
+
                     onChoose: function(info) {
                         const addressInput = document.getElementById('deliveryAddress');
                         addressInput.value = `ПВЗ СДЭК: г. ${info.cityName}, ${info.PVZ.Address}`;
                         addressInput.style.borderColor = 'var(--accent)';
                         setTimeout(() => addressInput.style.borderColor = 'var(--border-color)', 1500);
                     }
-                    
                 });
                 cdekWidgetInitialized = true;
             } catch (e) {
@@ -726,7 +731,6 @@
                 document.getElementById('cdek-map').innerHTML = '<p style="padding: 20px; text-align: center;">Не удалось загрузить карту СДЭК. Пожалуйста, введите адрес доставки вручную ниже.</p>';
             }
         }
-
         // Theme Toggle & Search...
         const themeToggle = document.getElementById('themeToggle');
         const savedTheme = localStorage.getItem('2soul-theme') || 'light';

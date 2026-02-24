@@ -536,6 +536,381 @@
         .search-input { display: none; position: absolute; right: 0; top: 150%; width: 300px; padding: 0.8rem 1rem; background: var(--bg-primary); border: 1px solid var(--border-color); color: var(--text-primary); font-family: inherit; box-shadow: 0 10px 20px rgba(0,0,0,0.05); animation: fadeUp 0.2s ease; }
         .search-input.open { display: block; }
         #cdek-map { width: 100%; height: 350px; background: var(--bg-secondary); border: 1px solid var(--border-color); margin-bottom: 10px; display: flex; align-items: center; justify-content: center; }
+
+        /* ===== FULLSCREEN LIGHTBOX ===== */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lightbox.open {
+            display: flex;
+        }
+        
+        .lightbox-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lightbox-image {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 44px;
+            height: 44px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 10001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lightbox-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 10001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        
+        .lightbox-arrow:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .lightbox-arrow.prev { left: 1rem; }
+        .lightbox-arrow.next { right: 1rem; }
+        
+        .lightbox-counter {
+            position: absolute;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 0.9rem;
+            background: rgba(0,0,0,0.5);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+        
+        .lightbox-dots {
+            position: absolute;
+            bottom: 4rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+        
+        .lightbox-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.4);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .lightbox-dot.active {
+            background: white;
+            transform: scale(1.3);
+        }
+
+        /* ===== MOBILE STYLES ===== */
+        @media (max-width: 768px) {
+            /* Header Mobile Fix */
+            header {
+                padding: 0.8rem 1rem;
+            }
+            
+            .header-content {
+                gap: 0.5rem;
+            }
+            
+            .logo {
+                font-size: 1.4rem;
+                letter-spacing: 1px;
+            }
+            
+            .header-icons {
+                gap: 0.5rem;
+            }
+            
+            .icon-btn {
+                padding: 0.4rem;
+                font-size: 1.1rem;
+            }
+            
+            .search-container {
+                position: static;
+            }
+            
+            .search-input {
+                position: fixed;
+                top: 60px;
+                left: 0;
+                right: 0;
+                width: 100%;
+                border-radius: 0;
+                border-left: none;
+                border-right: none;
+            }
+            
+            /* Navigation Mobile */
+            .nav-container {
+                margin-top: 56px;
+                top: 56px;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            nav {
+                padding: 0.8rem 1rem;
+            }
+            
+            .nav-links {
+                gap: 0;
+                justify-content: flex-start;
+                flex-wrap: nowrap;
+                padding-bottom: 5px;
+            }
+            
+            .nav-links li {
+                flex-shrink: 0;
+            }
+            
+            .nav-links a {
+                font-size: 0.75rem;
+                padding: 0.5rem 0.8rem;
+                white-space: nowrap;
+            }
+            
+            /* Hero Mobile */
+            .hero {
+                height: 40vh;
+                padding: 1.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 0.95rem;
+            }
+            
+            /* Products Grid Mobile */
+            main {
+                padding: 1.5rem 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.4rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.8rem;
+            }
+            
+            .product-card {
+                border-radius: 8px;
+            }
+            
+            .product-card:hover {
+                transform: none;
+            }
+            
+            /* Mobile Slider - Touch Friendly */
+            .product-slider-container {
+                touch-action: pan-y pinch-zoom;
+            }
+            
+            .slider-arrow {
+                opacity: 0.7;
+                width: 30px;
+                height: 30px;
+                font-size: 0.8rem;
+            }
+            
+            .slider-arrow.prev { left: 5px; }
+            .slider-arrow.next { right: 5px; }
+            
+            .slider-dots {
+                bottom: 10px;
+            }
+            
+            .slider-dot {
+                width: 6px;
+                height: 6px;
+            }
+            
+            .product-info {
+                padding: 0.8rem;
+            }
+            
+            .product-category {
+                font-size: 0.65rem;
+                margin-bottom: 0.3rem;
+            }
+            
+            .product-name {
+                font-size: 0.9rem;
+                margin-bottom: 0.3rem;
+                line-height: 1.3;
+            }
+            
+            .product-price {
+                font-size: 1.1rem;
+                margin-bottom: 0.8rem;
+            }
+            
+            .add-to-cart-btn {
+                padding: 0.7rem;
+                font-size: 0.75rem;
+            }
+            
+            /* Cart Sidebar Mobile */
+            .cart-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+            
+            .cart-header {
+                padding: 1.2rem;
+            }
+            
+            .cart-items {
+                padding: 1rem;
+            }
+            
+            .cart-footer {
+                padding: 1.2rem;
+            }
+            
+            /* Modals Mobile */
+            .modal {
+                padding: 0;
+            }
+            
+            .modal-content {
+                max-height: 100vh;
+                height: 100%;
+                border: none;
+            }
+            
+            .modal-header {
+                padding: 1rem 1.2rem;
+            }
+            
+            .modal-body {
+                padding: 1.2rem;
+            }
+            
+            .size-selection-modal {
+                padding: 1rem;
+            }
+            
+            .size-modal-content {
+                max-width: 100%;
+            }
+            
+            .size-modal-header {
+                padding: 1.5rem;
+            }
+            
+            .size-modal-body {
+                padding: 1.5rem;
+            }
+            
+            .sizes-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            /* Footer Mobile */
+            footer {
+                padding: 2rem 1rem;
+                margin-top: 3rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                text-align: center;
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
+            
+            /* Lightbox Mobile */
+            .lightbox-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            
+            .lightbox-arrow.prev { left: 0.5rem; }
+            .lightbox-arrow.next { right: 0.5rem; }
+            
+            .lightbox-image {
+                max-width: 100%;
+                max-height: 80vh;
+            }
+            
+            /* Notifications Mobile */
+            .success-message {
+                width: 90%;
+                padding: 2rem;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .sizes-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
     </style>
 </head>
 <body data-theme="light">
@@ -709,6 +1084,24 @@
         <p style="margin-top: 10px;">Мы свяжемся с вами в ближайшее время</p>
     </div>
 
+    <!-- Fullscreen Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" onclick="closeLightbox()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <button class="lightbox-arrow prev" onclick="lightboxPrev()">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <img class="lightbox-image" id="lightboxImage" src="" alt="">
+            <button class="lightbox-arrow next" onclick="lightboxNext()">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+            <div class="lightbox-dots" id="lightboxDots"></div>
+            <div class="lightbox-counter" id="lightboxCounter">1 / 5</div>
+        </div>
+    </div>
+
     <footer>
         <div class="footer-content">
             <div class="footer-section">
@@ -826,38 +1219,17 @@
 
         // Функция смены слайда
         window.changeSlide = function(event, productId, direction) {
-            event.stopPropagation(); // Предотвращает клик по карточке, если он есть
+            event.stopPropagation();
             
             const product = products.find(p => p.id === productId);
             if (!product || !product.images || product.images.length <= 1) return;
 
-            // Инициализация, если еще не было
             if (productSlides[productId] === undefined) productSlides[productId] = 0;
 
             const totalSlides = product.images.length;
-            
-            // Вычисляем новый индекс слайда
             productSlides[productId] = (productSlides[productId] + direction + totalSlides) % totalSlides;
             
-            const currentIdx = productSlides[productId];
-            
-            // Обновляем классы изображений
-            const sliderContainer = document.getElementById(`slider-${productId}`);
-            const slides = sliderContainer.querySelectorAll('.product-slide');
-            const dots = sliderContainer.querySelectorAll('.slider-dot');
-            
-            slides.forEach((slide, idx) => {
-                if (idx === currentIdx) slide.classList.add('active');
-                else slide.classList.remove('active');
-            });
-            
-            // Обновляем точки (если они есть)
-            if (dots.length) {
-                dots.forEach((dot, idx) => {
-                    if (idx === currentIdx) dot.classList.add('active');
-                    else dot.classList.remove('active');
-                });
-            }
+            updateSlider(productId);
         };
 
         // Render Products
@@ -880,7 +1252,7 @@
                 let sliderHtml = '';
                 if (images.length > 0) {
                     sliderHtml += images.map((img, i) => `
-                        <img src="${img}" class="product-slide ${i === currentIdx ? 'active' : ''}" alt="${product.name} - вид ${i+1}">
+                        <img src="${img}" class="product-slide ${i === currentIdx ? 'active' : ''}" alt="${product.name} - вид ${i+1}" onclick="openLightbox(${product.id}, ${i})">
                     `).join('');
                     
                     // Если картинок больше 1, добавляем кнопки и точки
@@ -893,7 +1265,7 @@
                                 <i class="fa-solid fa-chevron-right"></i>
                             </button>
                             <div class="slider-dots">
-                                ${images.map((_, i) => `<div class="slider-dot ${i === currentIdx ? 'active' : ''}"></div>`).join('')}
+                                ${images.map((_, i) => `<div class="slider-dot ${i === currentIdx ? 'active' : ''}" onclick="goToSlide(event, ${product.id}, ${i})"></div>`).join('')}
                             </div>
                         `;
                     }
@@ -904,7 +1276,7 @@
 
                 return `
                     <div class="product-card">
-                        <div class="product-slider-container" id="slider-${product.id}">
+                        <div class="product-slider-container" id="slider-${product.id}" data-product-id="${product.id}">
                             ${sliderHtml}
                         </div>
                         <div class="product-info">
@@ -916,7 +1288,167 @@
                     </div>
                 `;
             }).join('');
+            
+            // Инициализируем свайпы для мобильных
+            initTouchSliders();
         }
+        
+        // Переход к конкретному слайду
+        window.goToSlide = function(event, productId, index) {
+            event.stopPropagation();
+            const product = products.find(p => p.id === productId);
+            if (!product || !product.images) return;
+            
+            productSlides[productId] = index;
+            updateSlider(productId);
+        };
+        
+        // Обновление слайдера
+        function updateSlider(productId) {
+            const currentIdx = productSlides[productId];
+            const sliderContainer = document.getElementById(`slider-${productId}`);
+            if (!sliderContainer) return;
+            
+            const slides = sliderContainer.querySelectorAll('.product-slide');
+            const dots = sliderContainer.querySelectorAll('.slider-dot');
+            
+            slides.forEach((slide, idx) => {
+                slide.classList.toggle('active', idx === currentIdx);
+            });
+            
+            dots.forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === currentIdx);
+            });
+        }
+        
+        // Touch/Swipe поддержка для слайдеров
+        function initTouchSliders() {
+            document.querySelectorAll('.product-slider-container').forEach(slider => {
+                let startX = 0;
+                let startY = 0;
+                let isDragging = false;
+                
+                slider.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].clientX;
+                    startY = e.touches[0].clientY;
+                    isDragging = true;
+                }, { passive: true });
+                
+                slider.addEventListener('touchmove', (e) => {
+                    if (!isDragging) return;
+                    
+                    const diffX = e.touches[0].clientX - startX;
+                    const diffY = e.touches[0].clientY - startY;
+                    
+                    // Если горизонтальный свайп больше вертикального, предотвращаем скролл
+                    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 10) {
+                        e.preventDefault();
+                    }
+                }, { passive: false });
+                
+                slider.addEventListener('touchend', (e) => {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    
+                    const endX = e.changedTouches[0].clientX;
+                    const endY = e.changedTouches[0].clientY;
+                    const diffX = endX - startX;
+                    const diffY = endY - startY;
+                    
+                    // Свайп должен быть достаточно длинным и более горизонтальным чем вертикальным
+                    if (Math.abs(diffX) > 50 && Math.abs(diffX) > Math.abs(diffY)) {
+                        const productId = parseInt(slider.dataset.productId);
+                        if (diffX > 0) {
+                            // Свайп вправо - предыдущий слайд
+                            changeSlide(e, productId, -1);
+                        } else {
+                            // Свайп влево - следующий слайд
+                            changeSlide(e, productId, 1);
+                        }
+                    }
+                }, { passive: true });
+            });
+        }
+        
+        // ===== LIGHTBOX =====
+        let lightboxImages = [];
+        let lightboxIndex = 0;
+        let lightboxTouchStartX = 0;
+        
+        window.openLightbox = function(productId, imageIndex) {
+            const product = products.find(p => p.id === productId);
+            if (!product || !product.images || product.images.length === 0) return;
+            
+            lightboxImages = product.images;
+            lightboxIndex = imageIndex;
+            
+            updateLightbox();
+            document.getElementById('lightbox').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        };
+        
+        window.closeLightbox = function() {
+            document.getElementById('lightbox').classList.remove('open');
+            document.body.style.overflow = '';
+        };
+        
+        window.lightboxPrev = function() {
+            lightboxIndex = (lightboxIndex - 1 + lightboxImages.length) % lightboxImages.length;
+            updateLightbox();
+        };
+        
+        window.lightboxNext = function() {
+            lightboxIndex = (lightboxIndex + 1) % lightboxImages.length;
+            updateLightbox();
+        };
+        
+        function updateLightbox() {
+            document.getElementById('lightboxImage').src = lightboxImages[lightboxIndex];
+            document.getElementById('lightboxCounter').textContent = `${lightboxIndex + 1} / ${lightboxImages.length}`;
+            
+            // Обновляем точки
+            const dotsContainer = document.getElementById('lightboxDots');
+            dotsContainer.innerHTML = lightboxImages.map((_, i) => 
+                `<div class="lightbox-dot ${i === lightboxIndex ? 'active' : ''}" onclick="goToLightboxSlide(${i})"></div>`
+            ).join('');
+        }
+        
+        window.goToLightboxSlide = function(index) {
+            lightboxIndex = index;
+            updateLightbox();
+        };
+        
+        // Lightbox touch/swipe
+        document.getElementById('lightbox').addEventListener('touchstart', (e) => {
+            lightboxTouchStartX = e.touches[0].clientX;
+        }, { passive: true });
+        
+        document.getElementById('lightbox').addEventListener('touchend', (e) => {
+            const diffX = e.changedTouches[0].clientX - lightboxTouchStartX;
+            if (Math.abs(diffX) > 50) {
+                if (diffX > 0) {
+                    lightboxPrev();
+                } else {
+                    lightboxNext();
+                }
+            }
+        }, { passive: true });
+        
+        // Закрытие по клику на фон
+        document.getElementById('lightbox').addEventListener('click', (e) => {
+            if (e.target.classList.contains('lightbox') || e.target.classList.contains('lightbox-content')) {
+                closeLightbox();
+            }
+        });
+        
+        // Клавиатурная навигация
+        document.addEventListener('keydown', (e) => {
+            if (!document.getElementById('lightbox').classList.contains('open')) return;
+            
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') lightboxPrev();
+            if (e.key === 'ArrowRight') lightboxNext();
+        });
 
         // Filter Products
         function filterProducts(category, searchTerm = '') {
